@@ -31,6 +31,12 @@ async function run() {
       .db("sculptureDB")
       .collection("sculptures");
 
+    app.post("/addSculpture", async (req, res) => {
+      const newSculpture = req.body;
+      const result = await sculptureCollection.insertOne(newSculpture);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
