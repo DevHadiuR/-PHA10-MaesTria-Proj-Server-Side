@@ -31,6 +31,11 @@ async function run() {
       .db("sculptureDB")
       .collection("sculptures");
 
+    app.get("/addedSculptures", async (req, res) => {
+      const result = await sculptureCollection.find().toArray();
+      res.send(result);
+    });
+
     app.post("/addSculpture", async (req, res) => {
       const newSculpture = req.body;
       const result = await sculptureCollection.insertOne(newSculpture);
