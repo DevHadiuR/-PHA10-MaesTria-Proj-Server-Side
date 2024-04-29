@@ -43,6 +43,14 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/addedSculptures/byEmail/:User_Email", async (req, res) => {
+      const sculptureEmail = req.params.User_Email;
+      const query = { User_Email: sculptureEmail };
+      const result = await sculptureCollection.find(query).toArray();
+      res.send(result);
+      console.log(sculptureEmail);
+    });
+
     app.post("/addSculpture", async (req, res) => {
       const newSculpture = req.body;
       const result = await sculptureCollection.insertOne(newSculpture);
@@ -59,7 +67,7 @@ async function run() {
     // await client.close();
   }
 }
-run().catch(console.dir);
+run().catch(console.log);
 
 app.listen(port, () => {
   console.log(`website runnning on the port : ${port}`);
