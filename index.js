@@ -43,6 +43,37 @@ async function run() {
       res.send(result);
     });
 
+    app.put("/addedSculptures/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const updatedBody = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedSculture = {
+        $set: {
+          Image: updatedBody.Image,
+          Item_Name: updatedBody.Item_Name,
+          Subcategory_Name: updatedBody.Subcategory_Name,
+          Short_Description: updatedBody.Short_Description,
+          Price: updatedBody.Price,
+          Rating: updatedBody.Rating,
+          Customization: updatedBody.Customization,
+          Processing_Time: updatedBody.Processing_Time,
+          Stock_Status: updatedBody.Stock_Status,
+          User_Email: updatedBody.User_Email,
+          User_Name: updatedBody.User_Name,
+        },
+      };
+
+      const result = await sculptureCollection.updateOne(
+        filter,
+        updatedSculture,
+        options
+      );
+
+      res.send(result);
+    });
+
     app.get("/addedSculptures/byEmail/:User_Email", async (req, res) => {
       const sculptureEmail = req.params.User_Email;
       const query = { User_Email: sculptureEmail };
