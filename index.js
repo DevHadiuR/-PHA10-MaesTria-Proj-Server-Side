@@ -7,6 +7,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://assignment-10-sculpture-proj.web.app/",
+      "https://assignment-10-sculpture-proj.firebaseapp.com/",
+    ],
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("this is from the server site");
@@ -26,7 +35,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     const sculptureCollection = client
       .db("sculptureDB")
       .collection("sculptures");
@@ -113,10 +122,10 @@ async function run() {
     });
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
