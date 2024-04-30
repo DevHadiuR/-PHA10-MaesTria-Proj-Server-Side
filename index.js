@@ -93,6 +93,13 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/addedSculptures/category/:Subcategory_Name", async (req, res) => {
+      const categoryName = req.params.Subcategory_Name;
+      const query = { Subcategory_Name: categoryName };
+      const result = await sculptureCollection.find(query).toArray();
+      res.send(result);
+    });
+
     app.post("/addSculpture", async (req, res) => {
       const newSculpture = req.body;
       const result = await sculptureCollection.insertOne(newSculpture);
