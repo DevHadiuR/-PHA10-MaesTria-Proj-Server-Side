@@ -31,6 +31,10 @@ async function run() {
       .db("sculptureDB")
       .collection("sculptures");
 
+    const categoryCollection = client
+      .db("sculptureDB")
+      .collection("sculptureCategory");
+
     app.get("/addedSculptures", async (req, res) => {
       const result = await sculptureCollection.find().toArray();
       res.send(result);
@@ -92,6 +96,12 @@ async function run() {
     app.post("/addSculpture", async (req, res) => {
       const newSculpture = req.body;
       const result = await sculptureCollection.insertOne(newSculpture);
+      res.send(result);
+    });
+
+    app.get("/subSculptures", async (req, res) => {
+      const result = await categoryCollection.find().toArray();
+
       res.send(result);
     });
 
